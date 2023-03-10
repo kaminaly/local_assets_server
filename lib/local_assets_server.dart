@@ -95,10 +95,11 @@ class LocalAssetsServer {
   }
 
   _handleReq(HttpRequest request) async {
-    String path = request.requestedUri.path.replaceFirst('/', '');
+    String path =
+        Uri.decodeFull(request.requestedUri.path.replaceFirst('/', ''));
 
-    if (path == '') {
-      path = 'index.html';
+    if (path == '' || path[path.length - 1] == '/') {
+      path += 'index.html';
     }
 
     final name = basename(path);
